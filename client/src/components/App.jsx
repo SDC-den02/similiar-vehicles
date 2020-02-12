@@ -1,5 +1,6 @@
 import React from 'react';
 import SimilarVehicles from './SimilarVehicles.jsx';
+import Form from './Form.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +20,10 @@ class App extends React.Component {
         this.onMouseOutThree = this.onMouseOutThree.bind(this); 
         this.onMouseOverThree = this.onMouseOverThree.bind(this); 
         this.getSimilarVehicles = this.getSimilarVehicles.bind(this); 
+        this.getAllSimilarVehicles = this.getAllSimilarVehicles.bind(this);
+        this.postVehicle = this.postVehicle.bind(this);
+        this.updateVehicle = this.updateVehicle.bind(this);
+        this.deleteVehicle = this.deleteVehicle.bind(this);
     } 
 
     componentDidMount() {
@@ -44,7 +49,58 @@ class App extends React.Component {
         })
 
     }; 
+    getAllSimilarVehicles() {
+        this.setState({isLoading: true});
+        fetch('http://localhost:3008/api/similar_vehicles/All')
+        .then((results) => {
+           return results.json()
+        })
+        .then((data) => {
+            this.setState({
+                similarVehicles: data.results,
+                isLoading: false
+            });
+        })
+        .catch((err) => {
+            if (err) {
+                console.log("Ecountered Error in getSimilarVehicles", err)
+            }
+        })
 
+    }; 
+    postVehicle(vehicle) {
+        //console.log('app post', vehicle)
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vehicle)
+        }
+        fetch('http://localhost:3008/api/similar_vehicles', options)
+    }
+    deleteVehicle(vehicle) {
+        //console.log('app delete', vehicle)
+        let options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vehicle)
+        }
+        fetch('http://localhost:3008/api/similar_vehicles', options)
+    }
+    updateVehicle(vehicle) {
+       //console.log('app update', vehicle)
+        let options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vehicle)
+        }
+        fetch('http://localhost:3008/api/similar_vehicles', options)
+    }
     onMouseOverOne() {
         
         this.setState(
@@ -116,6 +172,12 @@ class App extends React.Component {
                     onMouseOverThree={this.onMouseOverThree} 
                     onMouseOutThree={this.onMouseOutThree} 
                 /> 
+                <Form 
+                getAllSimilarVehicles={this.getAllSimilarVehicles}
+                postVehicle={this.postVehicle}
+                deleteVehicle={this.deleteVehicle}
+                updateVehicle={this.updateVehicle}
+                />
             </div> : 
             <div><h1>Loading...</h1></div>
         ); 
