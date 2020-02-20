@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "start": "nodemon server/postgres.js",
+    "start": "nodemon server/mongoDB.js",
     "test": "jest --verbose --watch"
   },
   "author": "Lizbeth Anaya Ramos",
@@ -34,6 +34,7 @@
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
     "knex": "^0.20.9",
+    "mongoose": "^5.9.1",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "nodemon": "^2.0.2",

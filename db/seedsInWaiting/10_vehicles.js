@@ -14,20 +14,18 @@ const createFakeCar = () => ({
     picture: faker.random.image()
 });
 
-exports.seed = async (knex) => {
+exports.seed = async (knex) {
   // Deletes ALL existing entries
   await knex('vehicle').del()
       let fakeCars = [];
-      const desiredFakeCars = 10000000;
+      const desiredFakeCars = 1000;
       //console.log(createFakeCar())
       for (let i = 0; i <= desiredFakeCars; i++) {
         fakeCars.push(createFakeCar())
-        if (i % 1000 === 0) {
+        if (i % 100 === 0) {
           await knex('vehicle').insert(fakeCars);
           fakeCars = [];
-          if (i % 100000 === 0) {
           console.log(i)
-          }
       }
       
     }

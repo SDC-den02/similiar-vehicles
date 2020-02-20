@@ -80,7 +80,7 @@ class App extends React.Component {
         fetch('http://localhost:3008/api/similar_vehicles', options)
     }
     deleteVehicle(vehicle) {
-        //console.log('app delete', vehicle)
+        console.log('app delete', vehicle)
         let options = {
             method: 'DELETE',
             headers: {

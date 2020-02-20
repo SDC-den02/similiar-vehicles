@@ -73,7 +73,7 @@ class Form extends React.Component {
       <div>
       <form >
       <label> ID
-        <input name="id" type="number" value={this.state.id} onChange={this.onInputChange} />
+        <input name="id" value={this.state.id} onChange={this.onInputChange} />
       </label>
       <label> Year
         <input name="year" type="number" value={this.state.year} onChange={this.onInputChange} />

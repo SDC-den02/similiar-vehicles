@@ -14,21 +14,25 @@ const createFakeCar = () => ({
     picture: faker.random.image()
 });
 
-exports.seed = async (knex) => {
+exports.seed = function(knex) {
   // Deletes ALL existing entries
-  await knex('vehicle').del()
+  return knex('vehicle').del()
+    .then(()=>{
       let fakeCars = [];
-      const desiredFakeCars = 10000000;
+      const desiredFakeCars = 10000;
       //console.log(createFakeCar())
-      for (let i = 0; i <= desiredFakeCars; i++) {
+      for (let i = 0; i < desiredFakeCars; i++) {
         fakeCars.push(createFakeCar())
-        if (i % 1000 === 0) {
-          await knex('vehicle').insert(fakeCars);
-          fakeCars = [];
-          if (i % 100000 === 0) {
-          console.log(i)
-          }
       }
-      
-    }
-  }
+      return fakeCars;
+    })
+    .then((fakeCars)=> {
+     // console.log(fakeCars)
+      // Inserts seed entries
+      return knex('vehicle').insert(fakeCars);
+    })
+    .then(()=>{
+      console.log('02 is done')
+    })
+    .catch(err => console.log(`error seeding data: ${err}`))
+};
